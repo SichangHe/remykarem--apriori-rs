@@ -1,3 +1,9 @@
+Note: Steven: This is from [remykarem/apriori-rs](https://github.com/remykarem/apriori-rs). I removed the Python bindings.
+
+---
+
+Original README:
+
 # apriori-rs
 
 Implementation of apriori algorithm for association rule mining. Written in Rust 🦀 with Python bindings.
@@ -101,7 +107,7 @@ Obtain confidence and lift for a rule.
 
 ## Benchmarks
 
-Time taken (s) to generate frequent itemsets for the Online Retail II dataset (https://archive.ics.uci.edu/ml/machine-learning-databases/00502/) given minimum support and maximum length of itemset.
+Time taken (s) to generate frequent itemsets for the Online Retail II dataset (<https://archive.ics.uci.edu/ml/machine-learning-databases/00502/>) given minimum support and maximum length of itemset.
 
 | Min support, length | apriori-rs | [efficient-apriori](https://github.com/tommyod/Efficient-Apriori) | [mlxtend](http://rasbt.github.io/mlxtend/user_guide/frequent_patterns/apriori/) | [apyori](https://github.com/ymoch/apyori) |
 |:-------------------:|:----------:|:----------------:|:-------:|:----:|
