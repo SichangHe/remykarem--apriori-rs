@@ -1,4 +1,3 @@
-#![allow(dead_code, non_snake_case)]
 pub mod itemsets;
 pub mod rules;
 pub mod types;
@@ -11,7 +10,7 @@ use pyo3::{prelude::*, PyObjectProtocol};
 use std::collections::{HashMap, HashSet};
 use types::{Inventory, PyFrequentItemsets, PyItemName, RawTransaction, RawTransactionId};
 
-fn main() {
+pub fn main() {
     #[pymodule]
     fn apriori(_: Python, m: &PyModule) -> PyResult<()> {
         m.add_function(wrap_pyfunction!(apriori, m)?)?;
@@ -41,11 +40,11 @@ fn apriori(
     min_confidence: f32,
     max_length: usize,
 ) -> (Vec<Rule>, PyFrequentItemsets) {
-    let N = raw_transactions.len();
+    let n = raw_transactions.len();
     let (itemset_counts, inventory) =
         itemsets::count::generate_frequent_itemsets(raw_transactions, min_support, max_length);
 
-    let rules = rules::search::generate_rules(&min_confidence, &itemset_counts, N);
+    let rules = rules::search::generate_rules(&min_confidence, &itemset_counts, n);
 
     (
         wrapper::convert_rules(rules, inventory),

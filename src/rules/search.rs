@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use std::collections::VecDeque;
 
 use crate::{
@@ -8,8 +6,8 @@ use crate::{
 };
 
 /// Generate rules based on frequent itemsets
-pub fn generate_rules(min_conf: &f32, counter: &FrequentItemsets, N: usize) -> Vec<Rule> {
-    let N = N as f32;
+pub fn generate_rules(min_conf: &f32, counter: &FrequentItemsets, n: usize) -> Vec<Rule> {
+    let n = n as f32;
     counter
         .iter()
         .filter_map(|(&itemset_size, itemset_counts)| {
@@ -24,7 +22,7 @@ pub fn generate_rules(min_conf: &f32, counter: &FrequentItemsets, N: usize) -> V
                 .iter()
                 .flat_map(|(combi, _)| {
                     let combi: Itemset = combi.to_vec();
-                    bfs(&combi, min_conf, counter, N)
+                    bfs(&combi, min_conf, counter, n)
                 })
                 .collect::<Vec<Rule>>()
         })
@@ -32,7 +30,7 @@ pub fn generate_rules(min_conf: &f32, counter: &FrequentItemsets, N: usize) -> V
 }
 
 /// Given a combination, find a list of rules that can be generated from it
-pub fn bfs(combi: &[ItemId], &min_conf: &f32, counter: &FrequentItemsets, N: f32) -> Vec<Rule> {
+pub fn bfs(combi: &[ItemId], &min_conf: &f32, counter: &FrequentItemsets, n: f32) -> Vec<Rule> {
     let mut queue: VecDeque<Rule> = VecDeque::new();
     let mut blacklist = vec![];
     let mut final_rules = vec![];
@@ -45,7 +43,7 @@ pub fn bfs(combi: &[ItemId], &min_conf: &f32, counter: &FrequentItemsets, N: f32
             continue;
         }
 
-        rule.compute_confidence(counter, combi, N);
+        rule.compute_confidence(counter, combi, n);
 
         if rule.confidence >= min_conf {
             if let Some(new_rules) = rule.create_children(&blacklist, Some(&queue)) {

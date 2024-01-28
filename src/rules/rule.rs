@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use crate::types::{FrequentItemsets, ItemId};
 use std::collections::VecDeque;
 
@@ -95,14 +93,14 @@ impl Rule {
         let conseq = self.get_consequent();
         parent.get_consequent().iter().all(|x| conseq.contains(x))
     }
-    pub fn compute_confidence(&mut self, counter: &FrequentItemsets, combi: &[ItemId], N: f32) {
+    pub fn compute_confidence(&mut self, counter: &FrequentItemsets, combi: &[ItemId], n: f32) {
         let antecedent_support_count =
             counter[&self.get_antecedent().len()][self.get_antecedent()] as f32;
         let consequent_support_count =
             counter[&self.get_consequent().len()][self.get_consequent()] as f32;
         let union_support_count = counter[&self.combi.len()][combi] as f32;
         self.confidence = union_support_count / antecedent_support_count;
-        self.lift = union_support_count / (antecedent_support_count * consequent_support_count) * N
+        self.lift = union_support_count / (antecedent_support_count * consequent_support_count) * n
     }
 }
 

@@ -1,5 +1,3 @@
-#![allow(non_snake_case)]
-
 use crate::{
     itemsets::search::generate_candidates_from_prev,
     types::{
@@ -22,8 +20,8 @@ pub fn generate_frequent_itemsets_id(
     k: ItemsetLength,
 ) -> FrequentItemsets {
     let mut all_frequent_itemsets: FrequentItemsets = HashMap::with_capacity(k);
-    let N = raw_transactions.len() as f32;
-    let min_support_count = (min_support * N).ceil() as usize;
+    let n = raw_transactions.len() as f32;
+    let min_support_count = (min_support * n).ceil() as usize;
 
     // 1-itemset
     let (item_counts, mut transactions) =
@@ -64,8 +62,8 @@ pub fn generate_frequent_itemsets(
     k: ItemsetLength,
 ) -> (FrequentItemsets, Inventory) {
     let mut all_frequent_itemsets: FrequentItemsets = HashMap::with_capacity(k);
-    let N = raw_transactions.len() as f32;
-    let min_support_count = (min_support * N).ceil() as usize;
+    let n = raw_transactions.len() as f32;
+    let min_support_count = (min_support * n).ceil() as usize;
 
     // 1-itemset
     let (item_counts, inventory, mut transactions) =
@@ -156,10 +154,10 @@ pub fn generate_frequent_1_itemset_counts_id(
     raw_transactions: Vec<HashSet<ItemId>>,
     min_support: f32,
 ) -> (ItemCounts, Vec<Transaction>) {
-    let N = raw_transactions.len() as f32;
+    let n = raw_transactions.len() as f32;
 
     let mut item_counts = HashMap::with_capacity(APPROX_NUM_UNIQUE_ITEMS);
-    let min_support_count = (min_support * N).ceil() as u32;
+    let min_support_count = (min_support * n).ceil() as u32;
 
     // Update counts
     let transactions_new: Vec<Transaction> = raw_transactions
@@ -189,14 +187,14 @@ pub fn generate_frequent_1_itemset_counts(
     raw_transactions: Vec<HashSet<&str>>,
     min_support: f32,
 ) -> (ItemCounts, Inventory, Vec<Transaction>) {
-    let N = raw_transactions.len() as f32;
+    let n = raw_transactions.len() as f32;
 
     let mut reverse_lookup: ReverseLookup = HashMap::with_capacity(APPROX_NUM_UNIQUE_ITEMS);
     let mut inventory: Inventory = HashMap::with_capacity(APPROX_NUM_UNIQUE_ITEMS);
     let mut last_item_id = 0;
     let mut item_counts = HashMap::with_capacity(APPROX_NUM_UNIQUE_ITEMS);
     let mut items = Vec::with_capacity(APPROX_NUM_ITEMS_IN_1_TRANSACTION);
-    let min_support_count = (min_support * N).ceil() as u32;
+    let min_support_count = (min_support * n).ceil() as u32;
 
     // Update counts
     let transactions_new: Vec<Transaction> = raw_transactions
