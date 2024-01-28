@@ -1,6 +1,6 @@
-use pyo3::{Py, types::PyDict};
+use pyo3::{types::PyDict, Py};
 
-use crate::{HashMap,HashSet};
+use crate::{HashMap, HashSet};
 
 pub type ItemId = usize;
 pub type ItemName<'l> = &'l str;

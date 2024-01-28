@@ -15,7 +15,7 @@ impl Rule {
     pub fn from_pattern(pattern: &[ItemId]) -> Vec<Rule> {
         let mother = Rule {
             split: pattern.len(),
-            combi: pattern.iter().copied().collect(),
+            combi: pattern.to_vec(),
             confidence: 0.0,
             lift: 0.0,
         };

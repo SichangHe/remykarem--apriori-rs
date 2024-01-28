@@ -23,7 +23,7 @@ pub fn generate_rules(min_conf: &f32, counter: &FrequentItemsets, N: usize) -> V
             itemset_counts
                 .iter()
                 .flat_map(|(combi, _)| {
-                    let combi: Itemset = combi.iter().copied().collect();
+                    let combi: Itemset = combi.to_vec();
                     bfs(&combi, min_conf, counter, N)
                 })
                 .collect::<Vec<Rule>>()

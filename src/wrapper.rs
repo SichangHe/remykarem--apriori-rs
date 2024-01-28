@@ -1,5 +1,5 @@
-use crate::types::{FrequentItemsets, Inventory};
 use crate::rules;
+use crate::types::{FrequentItemsets, Inventory};
 use crate::Rule;
 use pyo3::prelude::*;
 use pyo3::types::{IntoPyDict, PyDict, PyFrozenSet};

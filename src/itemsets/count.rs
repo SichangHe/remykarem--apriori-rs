@@ -37,11 +37,7 @@ pub fn generate_frequent_itemsets_id(
         transactions.retain(|transaction| transaction.len() >= 2);
         let candidates = item_counts.keys().combinations(2);
         let frequent_2_itemset_counts: ItemsetCounts =
-            generate_frequent_2_itemset_counts(
-                candidates,
-                &transactions,
-                min_support_count,
-            );
+            generate_frequent_2_itemset_counts(candidates, &transactions, min_support_count);
         let frequent_1_itemset_counts: ItemsetCounts = convert_to_itemset_counts(item_counts);
 
         all_frequent_itemsets.insert(1, frequent_1_itemset_counts);
@@ -52,11 +48,8 @@ pub fn generate_frequent_itemsets_id(
     for size in 3..=k {
         transactions.retain(|transaction| transaction.len() >= size);
         let candidates = generate_candidates_from_prev(&all_frequent_itemsets[&(size - 1_usize)]);
-        let frequent_itemset_counts = generate_frequent_k_itemset_counts(
-            candidates,
-            &transactions,
-            min_support_count,
-        );
+        let frequent_itemset_counts =
+            generate_frequent_k_itemset_counts(candidates, &transactions, min_support_count);
 
         all_frequent_itemsets.insert(size, frequent_itemset_counts);
     }
@@ -86,11 +79,7 @@ pub fn generate_frequent_itemsets(
         transactions.retain(|transaction| transaction.len() >= 2);
         let candidates = item_counts.keys().combinations(2);
         let frequent_2_itemset_counts: ItemsetCounts =
-            generate_frequent_2_itemset_counts(
-                candidates,
-                &transactions,
-                min_support_count,
-            );
+            generate_frequent_2_itemset_counts(candidates, &transactions, min_support_count);
         let frequent_1_itemset_counts: ItemsetCounts = convert_to_itemset_counts(item_counts);
 
         all_frequent_itemsets.insert(1, frequent_1_itemset_counts);
@@ -101,11 +90,8 @@ pub fn generate_frequent_itemsets(
     for size in 3..=k {
         transactions.retain(|transaction| transaction.len() >= size);
         let candidates = generate_candidates_from_prev(&all_frequent_itemsets[&(size - 1_usize)]);
-        let frequent_itemset_counts = generate_frequent_k_itemset_counts(
-            candidates,
-            &transactions,
-            min_support_count,
-        );
+        let frequent_itemset_counts =
+            generate_frequent_k_itemset_counts(candidates, &transactions, min_support_count);
 
         all_frequent_itemsets.insert(size, frequent_itemset_counts);
     }
@@ -151,7 +137,7 @@ fn generate_frequent_k_itemset_counts(
                 .filter(|transaction| candidate.iter().all(|item| transaction.contains(item)))
                 .count();
             if candidate_count >= min_support_count {
-                Some((candidate.iter().copied().collect(), candidate_count as u32))
+                Some((candidate.to_vec(), candidate_count as u32))
             } else {
                 None
             }
@@ -420,7 +406,8 @@ mod tests {
     #[test]
     fn create_counts_one_itemset_with_min_support_1() {
         let raw_transactions = vec![raw_transaction![A, B, D], raw_transaction![A]];
-        let (itemset_counts, inventory, _) = generate_frequent_1_itemset_counts(raw_transactions, 1.0);
+        let (itemset_counts, inventory, _) =
+            generate_frequent_1_itemset_counts(raw_transactions, 1.0);
         let lookup = get_reverse_lookup(inventory);
 
         assert_eq!(itemset_counts.len(), 1);
@@ -435,7 +422,8 @@ mod tests {
             raw_transaction![B],
             raw_transaction![A, C],
         ];
-        let (itemset_counts, inventory, _) = generate_frequent_1_itemset_counts(raw_transactions, 0.5);
+        let (itemset_counts, inventory, _) =
+            generate_frequent_1_itemset_counts(raw_transactions, 0.5);
         let lookup = get_reverse_lookup(inventory);
 
         assert_eq!(itemset_counts.len(), 3);

@@ -9,7 +9,7 @@ pub fn generate_candidates_from_prev(prev_frequent_itemsets: &ItemsetCounts) -> 
 }
 
 /// Join k length itemsets into k + 1 length itemsets.
-/// 
+///
 /// Algorithm translated from
 /// https://github.com/tommyod/Efficient-Apriori/blob/master/efficient_apriori/itemsets.py
 pub fn join_step(mut itemsets: Vec<Itemset>) -> Vec<Itemset> {
@@ -33,8 +33,8 @@ pub fn join_step(mut itemsets: Vec<Itemset>) -> Vec<Itemset> {
         tail_items.clear();
         tail_items.push(itemset_last);
 
-        for j in (i + 1)..itemsets.len() {
-            let (itemset_n_first, itemset_n_last) = itemsets[j].split_at(itemsets[j].len() - 1);
+        for itemset in itemsets.iter().skip(i + 1) {
+            let (itemset_n_first, itemset_n_last) = itemset.split_at(itemset.len() - 1);
             let itemset_n_last = itemset_n_last.to_owned().pop().unwrap();
 
             if itemset_first == itemset_n_first {
