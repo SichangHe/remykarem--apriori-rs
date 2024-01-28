@@ -6,7 +6,6 @@ use crate::{
     },
 };
 use itertools::{Combinations, Itertools};
-use pyo3::prelude::pyfunction;
 use rayon::prelude::*;
 use std::collections::{hash_map::Keys, HashMap, HashSet};
 
@@ -149,7 +148,6 @@ fn convert_to_itemset_counts(item_counts: ItemCounts) -> ItemsetCounts {
 
 /// 1-itemset
 /// space: O(2n)
-#[pyfunction]
 pub fn generate_frequent_1_itemset_counts_id(
     raw_transactions: Vec<HashSet<ItemId>>,
     min_support: f32,
@@ -182,7 +180,6 @@ pub fn generate_frequent_1_itemset_counts_id(
 
 /// 1-itemset
 /// space: O(2n)
-#[pyfunction]
 pub fn generate_frequent_1_itemset_counts(
     raw_transactions: Vec<HashSet<&str>>,
     min_support: f32,
